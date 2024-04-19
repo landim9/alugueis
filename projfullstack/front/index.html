@@ -26,6 +26,7 @@
 
                     <th>CPF</th>
                     <th>Nome</th>
+                    <th>Excluir e Alterar</th>
              
                 </tr>
             </thead>
@@ -35,37 +36,48 @@
 
         <div class="card">
             <div class="card2">
-                <form action="">
+                <form action="" id="criar">
 
                     <div class="input-group">
-                        <input required="" type="text" name="text" class="input">
+                        <input required="" type="text" name="cpf" class="input" id="cpfInput" maxlength="14">
                         <label class="label">CPF</label>
                     </div>
     
                     <div class="input-group">
-                        <input required="" type="text" name="text" class="input">
+                        <input required="" type="text" name="nome" class="input">
                         <label class="label">Nome</label>
                     </div>
     
                     <div class="input-group">
-                        <input type="text" name="text" class="input">
+                        <input type="tel" name="telefone" class="input" id="telefoneInput" maxlength="14" >
                         <label class="label">Telefone</label>
                     </div>
     
                     <button class="btn-17" type="submit">
                         <span class="text-container">
-                          <span class="text">Button</span>
+                          <span class="text">Enviar</span>
                         </span>
                       </button>
                 </form>
-
-                
-           
             </div>
         </div>
     </main>
 
-    <div id="msgs">
+
+
+    <div id="errorModal" class="modal oculto dialog contactDialog hidden">
+        <div class="modal-content">
+          <span class="close">&times;</span>
+          <h2>Error Log</h2>
+          <h3 id="msg"> </h3>
+          <div id="errorMessages"></div>
+          
+        </div>
+      </div>
+
+
+
+    <div id="msgs" class="oculto">
         <h2 id="tit">Mensagens do sistema:</h2>
         <h3 id="msg"> </h3>
         <div>
@@ -79,4 +91,20 @@
 <script src="assets/script/main.js"></script>
 <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
 <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
+<script>
+    document.getElementById('cpfInput').addEventListener('input', function() {
+      var cpf = this.value.replace(/\D/g, ''); // Remove caracteres não numéricos
+      cpf = cpf.replace(/(\d{3})(\d)/, '$1.$2'); // Adiciona ponto após o terceiro dígito
+      cpf = cpf.replace(/(\d{3})(\d)/, '$1.$2'); // Adiciona ponto após o sexto dígito
+      cpf = cpf.replace(/(\d{3})(\d{1,2})$/, '$1-$2'); // Adiciona hífen após o nono dígito
+      this.value = cpf;
+    });
+
+    document.getElementById('telefoneInput').addEventListener('input', function() {
+  var telefone = this.value.replace(/\D/g, ''); // Remove caracteres não numéricos
+  telefone = telefone.replace(/^(\d{2})(\d)/g, '($1) $2'); // Adiciona parênteses no DDD
+  telefone = telefone.replace(/(\d)(\d{4})$/, '$1-$2'); // Adiciona hífen entre os últimos 4 dígitos
+  this.value = telefone;
+});
+    </script>
 </html>
